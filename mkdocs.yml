@@ -6,6 +6,9 @@ nav:
   - Python:
       - Basic Data Structures: python/basics.md
       - Functional Programming: python/functional.md
+      - Algorithms and Big O:
+          - Home: python/dsa/index.md
+          - Big O: python/dsa/big-o.md
   - AWS: 
       - Overview: aws/index.md
   - System Design: 
@@ -34,3 +37,9 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tabbed:
       alternate_style: true    # Great for showing Code vs Output in tabs
+  - pymdownx.arithmatex:       # LaTeX rendering
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js

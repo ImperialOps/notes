@@ -16,7 +16,7 @@ Welcome to my technical knowledge base. I am currently focused on mastering high
     
     * [Basic Data Structures](python/basics.md)
     * [Functional Programming](python/functional.md)
-    * [Algorithms & Big O](#)
+    * [Algorithms & Big O](python/dsa/index.md)
 
 -   :material-cloud: __AWS Cloud__
     
