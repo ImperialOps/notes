@@ -1,17 +1,36 @@
 site_name: Notes
 site_url: https://imperialops.github.io/notes
+
 nav:
-  - Python: python.md
-  - AWS: aws.md
-  - System Design: systems.md
-  - AI: ai.md
+  - Home: index.md
+  - Python:
+      - Basic Data Structures: python/basics.md
+      - Functional Programming: python/functional.md
+  - AWS: 
+      - Overview: aws/index.md
+  - System Design: 
+      - Distributed Systems: systems/distributed.md
+      - Generative AI & ML: systems/ai-ml.md
+
 theme:
   name: material
+  palette:
+    scheme: slate              # Optional: Dark mode is great for engineering notes
+    primary: indigo
+  features:
+    - content.code.copy        # Adds the copy button to code blocks
+    - navigation.sections      # Better visual grouping in the sidebar
+    - navigation.expand        # Keeps the menu open for easier browsing
+    - navigation.top           # Adds a 'back to top' button
+
 markdown_extensions:
-  - attr_list
+  - attr_list                  # Required for the "grid" layout
+  - md_in_html                 # Markdown in HTML
+  - admonition                 # For those colorful info/warning boxes
+  - pymdownx.details           # Collapsible blocks
+  - pymdownx.superfences       # Required for complex nesting
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
-  - admonition
-  - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true    # Great for showing Code vs Output in tabs
