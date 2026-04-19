@@ -9,6 +9,7 @@ nav:
       - Algorithms and Big O:
           - Home: python/dsa/index.md
           - Big O: python/dsa/big-o.md
+          - Sorting Algorithms: python/dsa/sorting.md
   - AWS: 
       - Overview: aws/index.md
   - System Design: 
