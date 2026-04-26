@@ -119,3 +119,40 @@ def merge(first, second):
 
 Insertion sort builds sorted list one item at time. Much less efficient on large lists than merge sort because O(n^2), but often faster on small lists (not Big O, smaller constants).
 
+Insertion sort Big O is `O(n^2)` (worst case).
+
+Outer loop always runs `n` times. Inner loop depends on input order.
+
+* **Best case:** Pre-sorted data, insertion sort runs very fast (`O(n)`) because inner loop rarely shifts.
+* **Average case:** `O(n^2)` because inner loop runs about half-range on average.
+* **Worst case:** Reverse data, still `O(n^2)` because inner loop runs full range each pass.
+
+Implementation reference:
+
+```python
+def insertion_sort(nums):
+    for i in range(len(nums)):
+        j = i
+        while j > 0 and nums[j - 1] > nums[j]:
+            nums[j], nums[j - 1] = nums[j - 1], nums[j]
+            j -= 1
+    return nums
+```
+
+### Why Use Insertion Sort?
+
+* **Fast on tiny inputs:** Often faster than merge sort and quicksort on very small lists.
+* **Adaptive:** Faster when data is partially sorted.
+* **Stable:** Equal-key elements keep relative order.
+* **In-place:** Uses constant extra memory.
+* **Online:** Can sort as new items arrive.
+
+#### Why fast on small lists?
+
+Many production sort implementations use insertion sort below small threshold (often around 10-ish), then switch to quicksort/merge sort for bigger inputs.
+
+Reason:
+
+* **No recursion overhead**
+* **Tiny memory footprint**
+* **Stable behavior**
