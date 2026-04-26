@@ -12,6 +12,8 @@ We write Big-O notation like this:
 O(formula)
 ```
 
+Pronounced Order *formula*.
+
 Where `formula` describes how an algorithm's run time or space requirements grow as the input size grows.
 
 * `O(1)` - constant
