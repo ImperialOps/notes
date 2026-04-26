@@ -52,7 +52,7 @@ Merge sort is a recursive sorting algorithm and it's quite a bit faster than bub
 * **Divide:** divide the large problem into smaller problems, and recursively solve the smaller problems
 * **Conquer:** Combine the results of the smaller problems to solve the large problem
 
-1. The “log n” part (The Divide)
+#### The “log n” part (The Divide)
 
 Think about how many times you can split a list in half until you reach individual elements.
 
@@ -60,14 +60,15 @@ Think about how many times you can split a list in half until you reach individu
 * In mathematics, $2^3 = 8$, which is the same as saying $\log_2(8) = 3$.
 Every time we recursively call `merge_sort`, we are halving the input. This "halving" process creates a tree with a height of log n.
 
-2. The “n” part (The Conquer)
+#### The “n” part (The Conquer)
 
 At each level of that tree, we have to call the `merge()` function.
 
 * The `merge()` function contains a `while` loop that iterates through the elements of the lists it is combining.
 * To merge two halves back into a single sorted list of size $n$, the function has to look at every single one of those $n$ elements once.
 
-3. Putting it together
+#### Putting it together
+
 Since we have log n levels of splitting, and at each level, we perform n amount of work to merge the pieces back together, we multiply them:
 
 `n (work per level) * log n (number of levels) = O(n log n)`
@@ -113,4 +114,8 @@ def merge(first, second):
 * Memory usage: Most sorting algorithms can be performed using a single copy of the original array. Merge sort requires extra subarrays in memory.
 * Recursive: Merge sort requires many recursive function calls, and in many languages (like Python), this can incur a performance penalty.
 
+
+## Insertion Sort
+
+Insertion sort builds a sorted list one item at a time. It's much less efficient on large lists than merge sort because it's O(n^2), but it's actually faster (not in Big O terms, but due to smaller constants) than merge sort on small lists.
 
