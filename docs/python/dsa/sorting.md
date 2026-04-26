@@ -2,7 +2,7 @@
 
 ## Bubble Sort
 
-Bubble sort is a very basic sorting algorithm named for the way elements "bubble up" to the top of the list.
+Bubble sort basic sorting algorithm. Name from elements that "bubble up" to top.
 
 Implementation reference:
 
@@ -24,52 +24,52 @@ def bubble_sort(nums):
 
 ### Best and Worst Case
 
-* **Best case:** If the data is pre-sorted, bubble sort becomes really fast `O(n)`.
-* **Worst case:** If the data is in reverse order, bubble sort becomes really slow `O(n^2)` (but still in the same complexity class as random data).
+* **Best case:** Pre-sorted data, bubble sort runs fast `O(n)`.
+* **Worst case:** Reverse data, bubble sort runs slow `O(n^2)` (same class as random data).
 
-Bubble sort relies on two nested layers of iteration:
+Bubble sort uses two nested loops:
 
-1. The Outer Loop: In the worst-case scenario (like a reverse-sorted list), we have to pass through the entire list multiple times to ensure every element "bubbles" to its correct position. In the worst case, this happens approximately `n` times.
-1. The Inner Loop: During each of those passes, we iterate through the list to compare adjacent elements. This inner loop also runs approximately `n` times (though it technically gets shorter by one each time, it still scales linearly with `n`).
+1. The Outer Loop: In worst case (reverse-sorted list), pass through whole list many times so each element "bubbles" to correct position. About `n` passes.
+1. The Inner Loop: Each pass compares adjacent elements through list. Inner loop also runs about `n` times (technically one shorter each pass, still linear in `n`).
 
-When you have a loop running `n` times inside another loop that runs `n` times, you multiply the complexities: `n * n = n^2`.
+Loop `n` times inside loop `n` times: `n * n = n^2`.
 
 #### Visualizing the Growth
 
-Imagine a list of 10 items. In the worst case, you might perform roughly 100 comparisons (10 squared).
-If you double the list to 20 items, you aren't just doubling the work; you're performing roughly 400 comparisons (20 squared).
-This quadratic growth is what makes bubble sort inefficient for large datasets compared to algorithms like quicksort or merge sort.
+List of 10 items: worst case about 100 comparisons (10 squared).
+List of 20 items: not double work, about 400 comparisons (20 squared).
+Quadratic growth makes bubble sort poor for large datasets vs quicksort or merge sort.
 
 #### The “Best Case” Exception
 
-It is worth noting that bubble sort has a "Best Case" time complexity of O(n). This happens if the list is already sorted. The `swapping` flag in the implementation allows the algorithm to realize no swaps were made during the first pass and exit early. However, when we talk about the "Big O" of an algorithm without qualifiers, we are usually referring to the upper bound or worst-case scenario.
+Bubble sort "Best Case" is O(n) when list already sorted. `swapping` flag detects no swaps on first pass, exits early. Big O without qualifier usually means upper bound / worst case.
 
 
 ## Merge Sort
 
-Merge sort is a recursive sorting algorithm and it's quite a bit faster than bubble sort. It's a divide and conquer algorithm.:
+Merge sort recursive sorting algorithm. Much faster than bubble sort. Divide-and-conquer algorithm:
 
-* **Divide:** divide the large problem into smaller problems, and recursively solve the smaller problems
-* **Conquer:** Combine the results of the smaller problems to solve the large problem
+* **Divide:** split large problem into smaller problems, recursively solve.
+* **Conquer:** combine smaller results to solve large problem.
 
 #### The “log n” part (The Divide)
 
-Think about how many times you can split a list in half until you reach individual elements.
+Count how many times list can split in half until single elements.
 
-* If you have 8 elements, you split it into 4, then 2, then 1. That took 3 steps.
-* In mathematics, $2^3 = 8$, which is the same as saying $\log_2(8) = 3$.
-Every time we recursively call `merge_sort`, we are halving the input. This "halving" process creates a tree with a height of log n.
+* 8 elements split to 4, then 2, then 1. Takes 3 steps.
+* In math, $2^3 = 8$, same as $\log_2(8) = 3$.
+Each `merge_sort` call halves input. Halving builds tree with height log n.
 
 #### The “n” part (The Conquer)
 
-At each level of that tree, we have to call the `merge()` function.
+At each tree level, call `merge()` function.
 
-* The `merge()` function contains a `while` loop that iterates through the elements of the lists it is combining.
-* To merge two halves back into a single sorted list of size $n$, the function has to look at every single one of those $n$ elements once.
+* `merge()` has `while` loop iterating elements from lists being combined.
+* To merge halves into sorted list size $n$, function reads each of those $n$ elements once.
 
 #### Putting it together
 
-Since we have log n levels of splitting, and at each level, we perform n amount of work to merge the pieces back together, we multiply them:
+Have log n split levels. Each level does n work to merge. Multiply:
 
 `n (work per level) * log n (number of levels) = O(n log n)`
 
@@ -106,16 +106,16 @@ def merge(first, second):
 
 ### Pros:
 
-* Fast: Merge sort is much faster than bubble sort. O(n*log(n)) instead of O(n^2).
-* Stable: Merge sort is a stable sort which means that values with duplicate keys in the original list will be in the same order in the sorted list.
+* Fast: Merge sort much faster than bubble sort. O(n*log(n)) vs O(n^2).
+* Stable: duplicate-key values keep original order after sort.
 
 ### Cons:
 
-* Memory usage: Most sorting algorithms can be performed using a single copy of the original array. Merge sort requires extra subarrays in memory.
-* Recursive: Merge sort requires many recursive function calls, and in many languages (like Python), this can incur a performance penalty.
+* Memory usage: many sorts use single array copy. Merge sort needs extra subarrays in memory.
+* Recursive: many recursive calls; in many languages (like Python), can add performance penalty.
 
 
 ## Insertion Sort
 
-Insertion sort builds a sorted list one item at a time. It's much less efficient on large lists than merge sort because it's O(n^2), but it's actually faster (not in Big O terms, but due to smaller constants) than merge sort on small lists.
+Insertion sort builds sorted list one item at time. Much less efficient on large lists than merge sort because O(n^2), but often faster on small lists (not Big O, smaller constants).
 
