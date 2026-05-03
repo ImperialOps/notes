@@ -2,7 +2,7 @@
 
 ## Bubble Sort
 
-Bubble sort basic sorting algorithm. Name from elements that "bubble up" to top.
+Basic algorithm. Tiny value float up toward end like bubbles.
 
 Implementation reference:
 
@@ -24,54 +24,56 @@ def bubble_sort(nums):
 
 ### Best and Worst Case
 
-* **Best case:** Pre-sorted data, bubble sort runs fast `O(n)`.
-* **Worst case:** Reverse data, bubble sort runs slow `O(n^2)` (same class as random data).
+* **Best case:** Already sorted → fast `O(n)`.
+* **Worst case:** Reversed → slow `O(n^2)` (random-ish data same class).
 
-Bubble sort uses two nested loops:
+Two nested loops:
 
-1. The Outer Loop: In worst case (reverse-sorted list), pass through whole list many times so each element "bubbles" to correct position. About `n` passes.
-1. The Inner Loop: Each pass compares adjacent elements through list. Inner loop also runs about `n` times (technically one shorter each pass, still linear in `n`).
+1. **Outer:** Worst case you sweep whole list many times so values "bubble" to right slots. Roughly `n` passes.
+2. **Inner:** Each sweep compares neighbors. Roughly `n` comparisons per sweep (each pass shorter by one — still scales like `n`).
 
-Loop `n` times inside loop `n` times: `n * n = n^2`.
+Outer `n`, inner `n` → multiply → `n^2`.
 
 #### Visualizing the Growth
 
-List of 10 items: worst case about 100 comparisons (10 squared).
-List of 20 items: not double work, about 400 comparisons (20 squared).
-Quadratic growth makes bubble sort poor for large datasets vs quicksort or merge sort.
+* 10 items, worst ~100 comparisons (`10²`).
+* 20 items → not double work → ~400 (`20²`).
+* Quadratic = bad at big lists vs merge sort / quicksort.
 
-#### The “Best Case” Exception
+#### “Best Case” Exception
 
-Bubble sort "Best Case" is O(n) when list already sorted. `swapping` flag detects no swaps on first pass, exits early. Big O without qualifier usually means upper bound / worst case.
+Sorted list → best case `O(n)`. `swapping` flag notices zero swaps after first pass → stop early.
 
+Unqualified Big O usually means worst / upper bound.
 
 ## Merge Sort
 
-Merge sort recursive sorting algorithm. Much faster than bubble sort. Divide-and-conquer algorithm:
+Recursive divide-and-conquer. Faster than bubble in practice.
 
-* **Divide:** split large problem into smaller problems, recursively solve.
-* **Conquer:** combine smaller results to solve large problem.
+* **Divide:** chop problem, recurse small pieces.
+* **Conquer:** merge sorted pieces back together.
 
-#### The “log n” part (The Divide)
+#### “log n” part (divide)
 
-Count how many times list can split in half until single elements.
+Halve list until singletons.
 
-* 8 elements split to 4, then 2, then 1. Takes 3 steps.
-* In math, $2^3 = 8$, same as $\log_2(8) = 3$.
-Each `merge_sort` call halves input. Halving builds tree with height log n.
+* 8 → 4 → 2 → 1 → 3 splits.
+* $2^3 = 8$ — same fact as $\log_2(8) = 3$.
 
-#### The “n” part (The Conquer)
+Every `merge_sort` call halves range → tree depth ~log n.
 
-At each tree level, call `merge()` function.
+#### “n” part (conquer)
 
-* `merge()` has `while` loop iterating elements from lists being combined.
-* To merge halves into sorted list size $n$, function reads each of those $n$ elements once.
+Each depth level runs `merge()`.
+
+* `merge()` loops with `while` over both halves.
+* Merging into size-$n$ output touches each element once → `O(n)` work that level.
 
 #### Putting it together
 
-Have log n split levels. Each level does n work to merge. Multiply:
+log n levels, `n` work per level → multiply:
 
-`n (work per level) * log n (number of levels) = O(n log n)`
+`n (work per level) * log n (levels) = O(n log n)`
 
 Implementation reference:
 
@@ -104,28 +106,27 @@ def merge(first, second):
     return final
 ```
 
-### Pros:
+### Pros
 
-* Fast: Merge sort much faster than bubble sort. O(n*log(n)) vs O(n^2).
-* Stable: duplicate-key values keep original order after sort.
+* **Speed:** Usually `O(n log n)`, smokes `O(n²)` bubble on big inputs.
+* **Stable:** Duplicate keys keep original relative order.
 
-### Cons:
+### Cons
 
-* Memory usage: many sorts use single array copy. Merge sort needs extra subarrays in memory.
-* Recursive: many recursive calls; in many languages (like Python), can add performance penalty.
-
+* **Memory:** Needs extra buffers; not like one-array-only sorts.
+* **Recursion:** Deep calls hurt some runtimes (e.g. Python).
 
 ## Insertion Sort
 
-Insertion sort builds sorted list one item at time. Much less efficient on large lists than merge sort because O(n^2), but often faster on small lists (not Big O, smaller constants).
+Grow sorted prefix one element at front. Large lists: worse than merge (`O(n²)`). Tiny lists: often wins anyway (constants win over Big-O story).
 
-Insertion sort Big O is `O(n^2)` (worst case).
+Worst-case Big-O: `O(n²)`.
 
-Outer loop always runs `n` times. Inner loop depends on input order.
+Outer loop `n` times always. Inner loop length depends how messy data is.
 
-* **Best case:** Pre-sorted data, insertion sort runs very fast (`O(n)`) because inner loop rarely shifts.
-* **Average case:** `O(n^2)` because inner loop runs about half-range on average.
-* **Worst case:** Reverse data, still `O(n^2)` because inner loop runs full range each pass.
+* **Best case:** Already sorted → `O(n)`, inner barely shifts.
+* **Average case:** `O(n²)` — inner walks ~half gap on typical mix.
+* **Worst case:** Reversed → `O(n²)` — inner walks full gap every time.
 
 Implementation reference:
 
@@ -141,18 +142,64 @@ def insertion_sort(nums):
 
 ### Why Use Insertion Sort?
 
-* **Fast on tiny inputs:** Often faster than merge sort and quicksort on very small lists.
-* **Adaptive:** Faster when data is partially sorted.
-* **Stable:** Equal-key elements keep relative order.
-* **In-place:** Uses constant extra memory.
-* **Online:** Can sort as new items arrive.
+* **Fast on tiny n:** Often beats merge/quicksort on very small spans.
+* **Adaptive:** Nearly sorted → less inner work.
+* **Stable:** Equal keys stay in order.
+* **In-place:** `O(1)` extra beyond array.
+* **Online:** Slide new items into sorted prefix as they arrive.
 
-#### Why fast on small lists?
+#### Why prod uses it on small chunks
 
-Many production sort implementations use insertion sort below small threshold (often around 10-ish), then switch to quicksort/merge sort for bigger inputs.
+Libs often run insertion sort under small threshold (~10-ish), swap to quicksort / merge beyond that:
 
-Reason:
+* No recursion tax
+* Tiny memory footprint
+* Still stable (if you pick stable merge variant elsewhere)
 
-* **No recursion overhead**
-* **Tiny memory footprint**
-* **Stable behavior**
+## Quick Sort
+
+Popular recursive divide-and-conquer. Real systems add tricks (median-of-three, insertion on small tails, etc.) — below is naive shape.
+
+### Divide
+
+* **Pick pivot** — want near middle of sorted outcome (median ideal).
+* **Partition** — shove `< pivot` left, `> pivot` right.
+* **Pivot settles** — one index now final.
+* **Recurse** — repeat on left and right subranges.
+
+### Conquer
+
+When every region finished partitioning → whole array sorted.
+
+Implementation reference:
+
+```python
+def quick_sort(nums, low, high):
+    if low < high:
+        p = partition(nums, low, high)
+        quick_sort(nums, low, p - 1)
+        quick_sort(nums, p + 1, high)
+
+
+def partition(nums, low, high):
+    pivot = nums[high]
+    i = low
+    for j in range(low, high):
+        if nums[j] < pivot:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+    nums[i], nums[high] = nums[high], nums[i]
+    return i
+```
+
+### Complexity sketch
+
+Average: `O(n log n)`. Naive worst (bad pivots): `O(n²)`.
+
+`partition()` scans `low..high` once → `O(n)` per invocation.
+
+Bill = (#partition calls) × `O(n)`.
+
+**Worst case shaped like:** already sorted input + pivot always smallest or biggest each step → skinny recursion tree → ~`n` partition layers → `n × n`.
+
+**Best split shaped like:** pivot near median each time → tree depth ~`log n` → `n log n`.
