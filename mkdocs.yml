@@ -13,6 +13,7 @@ nav:
           - Data Structures & Algorithms:
             - Home: python/dsa/dsa.md
             - Stacks: python/dsa/stack.md
+            - Queues: python/dsa/queue.md
   - AWS: 
       - Overview: aws/index.md
   - System Design: 
