@@ -6,10 +6,13 @@ nav:
   - Python:
       - Basic Data Structures: python/basics.md
       - Functional Programming: python/functional.md
-      - Algorithms and Big O:
+      - Data Structures and Algorithms:
           - Home: python/dsa/index.md
           - Big O: python/dsa/big-o.md
           - Sorting Algorithms: python/dsa/sorting.md
+          - Data Structures & Algorithms:
+            - Home: python/dsa/dsa.md
+            - Stacks: python/dsa/stack.md
   - AWS: 
       - Overview: aws/index.md
   - System Design: 
